@@ -16,3 +16,4 @@ venv/
 # OS
 Thumbs.db
 Desktop.ini
+/.pypirc
