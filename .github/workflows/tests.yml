@@ -28,7 +28,7 @@ jobs:
   # Realizing native controls needs a UI thread and the Windows App Runtime,
   # which GitHub's runners don't provide, so the examples are NOT run here.
   # Run them manually on a real Windows box after touching _Native — see
-  # AGENTS.md section 5.1.
+  # AGENTS.md section 9.
   build:
     runs-on: ubuntu-latest
     steps:
