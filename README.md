@@ -118,6 +118,17 @@ btn.native.background = some_brush    # raw WinUI, fully supported
 the Windows App Runtime, likely as MSIX, and that path has not been prototyped.
 Today this is a library for developers who already have Python installed.
 
+## Troubleshooting
+
+**`DLL load failed ... The filename or extension is too long`** — your virtual
+environment path is too deep. The winui3 extension modules have very long file
+names (`_winui3_microsoft_windows_applicationmodel_dynamicdependency_bootstrap`),
+and a nested venv can push them past Windows' 260-character `MAX_PATH`. Use a
+shorter path, or [enable long paths](https://learn.microsoft.com/windows/win32/fileio/maximum-file-path-limitation).
+
+**`ERROR_NOT_SUPPORTED` during bootstrap** — you're on the Microsoft Store build
+of Python, which is itself a packaged app. Use the python.org installer.
+
 ## Examples
 
 ```

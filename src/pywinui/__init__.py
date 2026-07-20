@@ -87,8 +87,10 @@ class _Native:
             raise RuntimeError(
                 "PyWinUI requires the winui3 bindings and the Windows App "
                 "Runtime.\n"
+                # ASCII only: this prints to consoles still using cp1252, where
+                # non-ASCII punctuation shows up as mojibake.
                 "  1) pip install the namespace packages (each namespace is its\n"
-                "     own wheel — .Controls and .Bootstrap are NOT included by\n"
+                "     own wheel - .Controls and .Bootstrap are NOT included by\n"
                 "     their parent):\n"
                 "       winui3-Microsoft.UI.Xaml\n"
                 "       winui3-Microsoft.UI.Xaml.Controls\n"
@@ -100,7 +102,12 @@ class _Native:
                 "  2) Install the Windows App Runtime: "
                 "https://aka.ms/windowsappsdk/runtime\n"
                 "  3) Use python.org Python, NOT the Microsoft Store build "
-                "(the Store build fails bootstrap with ERROR_NOT_SUPPORTED)."
+                "(the Store build fails bootstrap with ERROR_NOT_SUPPORTED).\n"
+                "  4) If the cause above is 'DLL load failed ... filename or "
+                "extension is too long', your environment sits too deep: the\n"
+                "     winui3 DLL names are long enough to exceed Windows'"
+                " 260-char MAX_PATH. Use a shorter venv path or enable long\n"
+                "     paths (LongPathsEnabled)."
             ) from exc
 
         # Stash the pieces the wrapper needs.
