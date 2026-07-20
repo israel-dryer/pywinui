@@ -1,0 +1,59 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pywinui"
+version = "0.1.0a1"
+description = "Build native WinUI 3 (Windows App SDK) desktop apps in idiomatic Python"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Israel Dryer", email = "israel.dryer@gmail.com" }]
+requires-python = ">=3.10"
+keywords = ["winui", "winui3", "windows-app-sdk", "gui", "desktop", "winrt", "windows"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Win32 (MS Windows)",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Microsoft :: Windows :: Windows 10",
+    "Operating System :: Microsoft :: Windows :: Windows 11",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: User Interfaces",
+    "Typing :: Typed",
+]
+
+# Every WinRT namespace ships as its own wheel, and parents do NOT pull in their
+# children — .Controls and .Bootstrap must be listed explicitly. The markers keep
+# `pip install pywinui` working off-Windows so the pure-Python test suite (and
+# editors/CI on Linux) still function; only realizing controls needs Windows.
+dependencies = [
+    "winui3-Microsoft.UI.Xaml>=3.2,<4; sys_platform == 'win32'",
+    "winui3-Microsoft.UI.Xaml.Controls>=3.2,<4; sys_platform == 'win32'",
+    "winui3-Microsoft.UI.Dispatching>=3.2,<4; sys_platform == 'win32'",
+    "winui3-Microsoft.Windows.ApplicationModel.DynamicDependency>=3.2,<4; sys_platform == 'win32'",
+    "winui3-Microsoft.Windows.ApplicationModel.DynamicDependency.Bootstrap>=3.2,<4; sys_platform == 'win32'",
+    "winrt-Windows.Foundation>=3.2,<4; sys_platform == 'win32'",
+]
+
+[project.optional-dependencies]
+# examples/async_file_read.py awaits real WinRT storage APIs.
+examples = ["winrt-Windows.Storage>=3.2,<4; sys_platform == 'win32'"]
+dev = ["pytest>=8.0"]
+
+[project.urls]
+Homepage = "https://github.com/israel-dryer/pywinui"
+Repository = "https://github.com/israel-dryer/pywinui"
+Issues = "https://github.com/israel-dryer/pywinui/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pywinui"]
+
+[tool.pytest.ini_options]
+# src layout: make `import pywinui` work without an editable install.
+pythonpath = ["src"]
+testpaths = ["tests"]

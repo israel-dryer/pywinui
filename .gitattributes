@@ -1,0 +1,2 @@
+# Normalize to LF in the repo; Git checks out native line endings on Windows.
+* text=auto eol=lf
